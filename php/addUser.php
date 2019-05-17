@@ -22,7 +22,9 @@ if ((strlen($login)>3)&&(strlen($login)<16)&&
 
         if($user->login==$login){
             $errors[] ="Логин занят";
-            break;
+        }
+        if($user->email==$email){
+            $errors[] ="Этот E-mail уже зарегистрирован";
         }
 
     }
@@ -35,10 +37,13 @@ if ((strlen($login)>3)&&(strlen($login)<16)&&
         $xml->user[$count - 1]->addChild('password', $passwordHash);
         $xml->user[$count - 1]->addChild('email', $email);
         $xml->user[$count - 1]->addChild('name', $name);
-        $xml->user[$count - 1]->addChild('name', date("F j, Y, g:i a"));
+        $xml->user[$count - 1]->addChild('date', date("F j, Y, g:i a"));
 
         file_put_contents('users.xml', $xml->asXML());
+        echo "Вы зарегистрированы";
     }else{
         echo array_shift($errors);
     }
+}else{
+    echo "Заполните все поля";
 }

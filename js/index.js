@@ -18,13 +18,29 @@ $( document ).ready(function() {
             type: "POST",
             data: $("#fromReg").serialize(),
             success: function (data) {
-
                 $("#resmess").html(data);
-
+            },
+            error:function () {
+                $("#resmess").html("Произошла ошибка");
             }
+
         });
         event.preventDefault();
     });
 
+    $("#fromAut").submit(function () {
+        $.ajax({
+            url: "/php/ConfirmUser.php",
+            type: "POST",
+            data: $("#fromAut").serialize(),
+            success: function (data) {
+                $("#resmess").html(data);
+            },
+            error:function () {
+                $("#resmess").html("Произошла ошибка");
+            }
 
+        });
+        event.preventDefault();
+    });
 });

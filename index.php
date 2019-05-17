@@ -30,11 +30,11 @@
     </form>
 </div>
 <div id="authorization">
-    <form action="" method="post">
-        <label for="loginA">Логин:</label><br>
-        <input required id="loginA" type="text"><br>
-        <label for="passworldA">Пароль:</label><br>
-        <input required id="passworldA" type="password"><br>
+    <form action="" id="fromAut" method="post">
+        <label for="loginAI">Логин:</label><br>
+        <input minlength="4" maxlength="15"  name="loginAN" required id="loginAI" type="text"><br>
+        <label for="passwordAI">Пароль:</label><br>
+        <input minlength="6" maxlength="56" required id="passwordAI" name="passwordAN" type="password"><br>
         <input type="submit" value="Вход" id="CorrectUser">
     </form>
 </div>
