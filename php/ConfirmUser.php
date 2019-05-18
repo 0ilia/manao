@@ -1,4 +1,14 @@
 <?php
+
+function generateSalt()
+{
+    $salt = '';
+    $saltLength = 10; //длина соли
+    for($i=0; $i<$saltLength; $i++) {
+        $salt .= chr(mt_rand(33,126)); //символ из ASCII-table
+    }
+    return $salt;
+}
 $salt = 'r5LL';
 $errors = array();
 $login = trim(htmlentities($_POST['loginAN'], ENT_QUOTES));
@@ -15,14 +25,23 @@ $state = 0 ;
         if($user->login==$login) {
             $state++;
             $passwordHash = $user->password;
-        $name = $user->name;
+            $name = $user->name;
+            $loginForCook =$user->login;
             break;
         }
     }
     if($state == 1 ){
         if(password_verify($password,$passwordHash)){
-            echo "Hello ".$name;
-        //куки
+            session_start();
+            $_SESSION['name'] = (string)$name;
+            $_SESSION['login'] = (string)$login;
+            $key = generateSalt(); //назовем ее $key
+            $xml = simplexml_load_file('users.xml');
+            $count = count($xml);
+            $xml->user[$count - 1]->cookie=  $key;
+
+            setcookie('login', $loginForCook, time()+60*60*24*30); //логин
+            setcookie('key', $key, time()+60*60*24*30); //случайная строка
         }else{
             $errors[] = "Неверный пароль";
         }

@@ -43,4 +43,21 @@ $( document ).ready(function() {
         });
         event.preventDefault();
     });
+
+
+    $("#exitForm").submit(function () {
+        $.ajax({
+            url: "/php/exit.php",
+            type: "POST",
+            data: $("#exitForm").serialize(),
+            success: function (data) {
+                $("#resmess").html(data);
+            },
+            error:function () {
+                $("#resmess").html("Произошла ошибка");
+            }
+
+        });
+        event.preventDefault();
+    });
 });

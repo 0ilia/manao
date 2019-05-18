@@ -1,3 +1,31 @@
+<?php
+session_start();
+var_dump($_SESSION);
+if(empty($_SESSION['login'])&& empty($_SESSION['name'])) {
+    if (!(empty($_COOKIE['login'])) &&  !(empty($_COOKIE['key']))) {
+        //Пишем логин и ключ из КУК в переменные (для удобства работы):
+        $login = $_COOKIE['login'];
+        $key = $_COOKIE['key']; //ключ из кук (аналог пароля, в базе поле cookie)
+        $xml = simplexml_load_file('php/users.xml');
+        $state = 0;
+        foreach ($xml as $user) {
+            if (($user->login == $login) && ($user->cookie == $key)) {
+                $name = $user->name;
+                $login = $user->login;
+                $state++;
+                break;
+            }
+        }
+        if ($state == 1) {
+            //session_start();
+            //Пишем в сессию информацию о том, что мы авторизовались:
+            $_SESSION['name'] = (string)$name;
+            $_SESSION['login'] = (string)$login;
+        }
+    }
+}
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,7 +37,7 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-
+<?php if (!isset($_SESSION['name'])){?>
 <div id="registrationAuthorization">
     <button id="registrationButton">Регистрация</button>
     <button id="authorizationButton">Авторизации</button>
@@ -38,8 +66,15 @@
         <input type="submit" value="Вход" id="CorrectUser">
     </form>
 </div>
+<?}else{
+    echo 'Привет, '.$_SESSION['name'];
+?>
+    <form action="" method="post" id="exitForm">
+        <input type="submit" value="Выход" id="exitButton">
+    </form>
+<?
+}?>
 <div id="resmess"></div>
-
 
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/index.js"></script>
