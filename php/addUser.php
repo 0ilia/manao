@@ -37,8 +37,8 @@ if ((strlen($login)>3)&&(strlen($login)<16)&&
         $xml->user[$count - 1]->addChild('password', $passwordHash);
         $xml->user[$count - 1]->addChild('email', $email);
         $xml->user[$count - 1]->addChild('name', $name);
-        $xml->user[$count - 1]->addChild('date', date("F j, Y, g:i a"));
         $xml->user[$count - 1]->addChild('cookie');
+        $xml->user[$count - 1]->addChild('date', date("F j, Y, g:i a"));
         $xml->user[$count - 1]->addChild('ip',$_SERVER['REMOTE_ADDR']);
         file_put_contents('users.xml', $xml->asXML());
         echo "Вы зарегистрированы";
