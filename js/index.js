@@ -47,7 +47,7 @@ $( document ).ready(function() {
 
     $("#exitForm").submit(function () {
         $.ajax({
-            url: "/php/exit.php",
+            url: "/php/logout.php",
             type: "POST",
             data: $("#exitForm").serialize(),
             success: function (data) {

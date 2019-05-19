@@ -1,5 +1,4 @@
 <?php
-
 function generateSalt()
 {
     $salt = '';
@@ -19,7 +18,7 @@ if ((strlen($login)>3)&&(strlen($login)<16)&&
 ) {
 
 $state = 0 ;
-
+$currentUser = 0 ;
     $xml = simplexml_load_file('users.xml');
     foreach ($xml as $user){
         if($user->login==$login) {
@@ -29,6 +28,7 @@ $state = 0 ;
             $loginForCook =$user->login;
             break;
         }
+        $currentUser++;
     }
     if($state == 1 ){
         if(password_verify($password,$passwordHash)){
@@ -37,11 +37,11 @@ $state = 0 ;
             $_SESSION['login'] = (string)$login;
             $key = generateSalt(); //назовем ее $key
             $xml = simplexml_load_file('users.xml');
-            $count = count($xml);
-            $xml->user[$count - 1]->cookie=  $key;
+            $xml->user[$currentUser]->cookie= $key;
 
-            setcookie('login', $loginForCook, time()+60*60*24*30); //логин
-            setcookie('key', $key, time()+60*60*24*30); //случайная строка
+            setcookie('login', $loginForCook, time()+60*60*24*30,'/' ); //логин
+            setcookie('key', $key, time()+60*60*24*30,'/'); //случайная строка
+            var_dump($_COOKIE);
         }else{
             $errors[] = "Неверный пароль";
         }
