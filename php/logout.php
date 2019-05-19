@@ -1,4 +1,5 @@
 <?php
+header('Location: http://manao/index.php');
 
 session_start();
 $_SESSION = array();

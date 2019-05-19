@@ -3,7 +3,8 @@
 /*var_dump($_SESSION);
 var_dump($_COOKIE);
 
-  */  //Проверяем, не пустые ли нужные нам куки...
+  *///Проверяем, не пустые ли нужные нам куки...
+
 if ((!empty($_COOKIE['login'])) and (!empty($_COOKIE['key']))) {
         //Пишем логин и ключ из КУК в переменные (для удобства работы):
 
@@ -25,10 +26,9 @@ if ((!empty($_COOKIE['login'])) and (!empty($_COOKIE['key']))) {
         }
 
         if ($state == 1) {
-          //  session_start();
+            session_start();
             $_SESSION['name'] = (string)$name;
             $_SESSION['login'] = (string)$login;
-            echo "12";
         }
     }
 
