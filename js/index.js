@@ -1,16 +1,16 @@
-$( document ).ready(function() {
+$(document).ready(function () {
 
     $("#registrationButton").click(function () {
-        $("#registration").css("display","block");
-        $("#authorization").css("display","none");
-
+        $("#registration").css("display", "block");
+        $("#authorization").css("display", "none");
+        $("#resmess").empty();
     });
 
     $("#authorizationButton").click(function () {
-        $("#registration").css("display","none");
-        $("#authorization").css("display","block");
+        $("#registration").css("display", "none");
+        $("#authorization").css("display", "block");
+        $("#resmess").empty();
     });
-
 
     $("#fromReg").submit(function () {
         $.ajax({
@@ -20,10 +20,9 @@ $( document ).ready(function() {
             success: function (data) {
                 $("#resmess").html(data);
             },
-            error:function () {
+            error: function () {
                 $("#resmess").html("Произошла ошибка");
             }
-
         });
         event.preventDefault();
     });
@@ -36,14 +35,12 @@ $( document ).ready(function() {
             success: function (data) {
                 $("#resmess").html(data);
             },
-            error:function () {
+            error: function () {
                 $("#resmess").html("Произошла ошибка");
             }
-
         });
         event.preventDefault();
     });
-
 
     $("#exitForm").submit(function () {
         $.ajax({
@@ -53,11 +50,14 @@ $( document ).ready(function() {
             success: function (data) {
                 $("#resmess").html(data);
             },
-            error:function () {
+            error: function () {
                 $("#resmess").html("Произошла ошибка");
             }
-
         });
         event.preventDefault();
+    });
+
+    $("input").on('keydown', function (e) {
+        return e.which !== 32;
     });
 });

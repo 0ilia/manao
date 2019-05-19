@@ -1,38 +1,23 @@
 <?php
-//session_start();
-/*var_dump($_SESSION);
-var_dump($_COOKIE);
-
-  *///Проверяем, не пустые ли нужные нам куки...
-
 if ((!empty($_COOKIE['login'])) and (!empty($_COOKIE['key']))) {
-        //Пишем логин и ключ из КУК в переменные (для удобства работы):
-
-        $login = $_COOKIE['login'];
-        $key = $_COOKIE['key']; //ключ из кук (аналог пароля, в базе поле cookie)
-        /*
-            Формируем и отсылаем SQL запрос:
-            ВЫБРАТЬ ИЗ таблицы_users ГДЕ поле_логин = $login.
-        */
-        $xml = simplexml_load_file('php/users.xml');
-        $state = 0;
-        foreach ($xml as $user) {
-            if (($user->login == $login) && ($user->cookie == $key)) {
-                $name = $user->name;
-                $login = $user->login;
-                $state++;
-                break;
-            }
-        }
-
-        if ($state == 1) {
-            session_start();
-            $_SESSION['name'] = (string)$name;
-            $_SESSION['login'] = (string)$login;
+    $login = $_COOKIE['login'];
+    $key = $_COOKIE['key'];
+    $xml = simplexml_load_file('php/users.xml');
+    $state = 0;
+    foreach ($xml as $user) {
+        if (($user->login == $login) && ($user->cookie == $key)) {
+            $name = $user->name;
+            $login = $user->login;
+            $state++;
+            break;
         }
     }
-
-
+    if ($state == 1) {
+        session_start();
+        $_SESSION['name'] = (string)$name;
+        $_SESSION['login'] = (string)$login;
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -45,7 +30,7 @@ if ((!empty($_COOKIE['login'])) and (!empty($_COOKIE['key']))) {
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<?php if ((!isset($_SESSION['name']))&&(!isset($_SESSION['login']))) { ?>
+<?php if ((!isset($_SESSION['name'])) && (!isset($_SESSION['login']))) { ?>
     <div id="registrationAuthorization">
         <button id="registrationButton">Регистрация</button>
         <button id="authorizationButton">Авторизации</button>
@@ -57,7 +42,8 @@ if ((!empty($_COOKIE['login'])) and (!empty($_COOKIE['key']))) {
             <label for="passwordRI">Пароль:</label><br>
             <input minlength="6" maxlength="56" name="passwordRN" required id="passwordRI" type="password"><br>
             <label for="confirm_passwordRI">Повторите пароль:</label><br>
-            <input required name="confirm_passwordRN" id="confirm_passwordRI" type="password"><br>
+            <input required name="confirm_passwordRN" minlength="6" maxlength="56" id="confirm_passwordRI"
+                   type="password"><br>
             <label for="emailRI">E-mail:</label><br>
             <input minlength="5" required type="email" name="emailRN" id="emailRI"><br>
             <label for="nameRI">Имя:</label><br>
@@ -83,7 +69,6 @@ if ((!empty($_COOKIE['login'])) and (!empty($_COOKIE['key']))) {
     <?
 } ?>
 <div id="resmess"></div>
-
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/index.js"></script>
 </body>
