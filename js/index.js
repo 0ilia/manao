@@ -32,9 +32,9 @@ $(document).ready(function () {
         });
     }
 
-    ajaxRequest("#fromReg", "/php/addUser.php")
-    ajaxRequest("#fromAut", "/php/ConfirmUser.php")
-    ajaxRequest("#exitForm", "/php/logout.php")
+    ajaxRequest("#fromReg", "/php/addUser.php");
+    ajaxRequest("#fromAut", "/php/ConfirmUser.php");
+    ajaxRequest("#exitForm", "/php/logout.php");
 
 
     $("input").on('keydown', function (e) {

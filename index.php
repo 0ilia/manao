@@ -1,5 +1,5 @@
 <?php
-if ((!empty($_COOKIE['login'])) and (!empty($_COOKIE['key']))) {
+if ((!empty($_COOKIE['login'])) && (!empty($_COOKIE['key']))) {
     $login = $_COOKIE['login'];
     $key = $_COOKIE['key'];
     $xml = simplexml_load_file('php/users.xml');

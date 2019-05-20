@@ -2,9 +2,9 @@
 function generateSalt()
 {
     $salt = '';
-    $saltLength = 17; //длина соли
+    $saltLength = 17;
     for ($i = 0; $i < $saltLength; $i++) {
-        $salt .= chr(mt_rand(33, 126)); //символ из ASCII-table
+        $salt .= chr(mt_rand(33, 126));
     }
     return $salt;
 }
@@ -36,12 +36,12 @@ if ((strlen($login) > 3) && (strlen($login) < 16) &&
             session_start();
             $_SESSION['name'] = (string)$name;
             $_SESSION['login'] = (string)$login;
-            $key = generateSalt(); //назовем ее $key
+            $key = generateSalt();
             $xml = simplexml_load_file('users.xml');
             $xml->user[$currentUser]->cookie = $key;
-            setcookie('login', $loginForCook, time() + 60 * 60 * 24 * 30, '/'); //логин
-            setcookie('key', $key, time() + 60 * 60 * 24 * 30, '/'); //случайная строка
-            echo json_encode(array("0"=>"Вы вошли , обновите страницу"));
+            setcookie('login', $loginForCook, time() + 60 * 60 * 24 * 30, '/');
+            setcookie('key', $key, time() + 60 * 60 * 24 * 30, '/');
+            echo json_encode(array("0" => "Вы вошли , обновите страницу"));
         } else {
             $errors[] = "Неверный пароль";
         }
@@ -50,10 +50,10 @@ if ((strlen($login) > 3) && (strlen($login) < 16) &&
     }
     if (empty($errors)) {
         file_put_contents('users.xml', $xml->asXML());
-    }else {
-        $shiftError =  array_shift($errors);
-        echo json_encode(array("0"=>$shiftError));
+    } else {
+        $shiftError = array_shift($errors);
+        echo json_encode(array("0" => $shiftError));
     }
 } else {
-    echo json_encode(array("0"=>"Заполните все поля"));
+    echo json_encode(array("0" => "Заполните все поля"));
 }
