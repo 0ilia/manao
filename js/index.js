@@ -8,10 +8,10 @@ $(document).ready(function () {
         });
     }
 
-    displayObject("#registrationButton", "#registration", "authorization");
+    displayObject("#registrationButton", "#registration", "#authorization");
     displayObject("#authorizationButton", "#authorization", "#registration");
 
-    function ajaxRequest(idform, path) {
+    function ajaxRequest(idform, path,resMessage = "#resmess") {
 
         $(idform).submit(function () {
             $.ajax({
@@ -19,7 +19,10 @@ $(document).ready(function () {
                 type: "POST",
                 data: $(idform).serialize(),
                 success: function (data) {
-                    $("#resmess").html(data);
+                    data = JSON.parse(data);
+                    for (var id in data){
+                        $(resMessage).html(data[id]);
+                     }
                 },
                 error: function () {
                     $("#resmess").html("Произошла ошибка");
